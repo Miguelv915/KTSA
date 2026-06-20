@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,7 +49,7 @@
    RESET
    ============================================ */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body {
   margin: 0;
   font-family: var(--body);
@@ -236,10 +235,11 @@ p { margin: 0; }
     background: var(--moss); color: var(--bone);
     display: flex; flex-direction: column;
     padding: 6rem 2rem 2rem;
-    transform: translateY(-100%); transition: transform .4s var(--ease);
+    transform: translateY(-100%); transition: transform .4s var(--ease), visibility 0s linear .4s;
+    visibility: hidden;
     z-index: 60;
   }
-  .nav__mobile.open { transform: translateY(0); }
+  .nav__mobile.open { transform: translateY(0); visibility: visible; transition: transform .4s var(--ease), visibility 0s linear 0s; }
   .nav__mobile a {
     font-family: var(--display); font-size: 1.7rem;
     padding: .6rem 0; border-bottom: 1px solid rgba(201,166,107,.2);
@@ -880,6 +880,142 @@ p { margin: 0; }
   0%, 90%, 100% { transform: translateY(0); }
   95% { transform: translateY(-6px); }
 }
+
+/* ============================================
+   MOBILE REFINEMENTS  (≤ 768px y ≤ 480px)
+   ============================================ */
+@media (max-width: 768px) {
+  /* Container más ajustado */
+  :root { --gutter: clamp(1rem, 4vw, 1.5rem); }
+
+  /* Tipografía base un poco más pequeña */
+  body { font-size: 15px; }
+  h2 { font-size: clamp(1.75rem, 7vw, 2.4rem); }
+  h3 { font-size: 1.25rem; }
+
+  /* Eyebrow: menos letter-spacing para evitar saltos */
+  .eyebrow { font-size: .68rem; letter-spacing: .18em; }
+  .eyebrow::before { width: 22px; }
+
+  /* Botones: tap-targets cómodos */
+  .btn { padding: .9rem 1.3rem; font-size: .78rem; min-height: 44px; }
+
+  /* Secciones más compactas */
+  .section { padding: 4rem 0; }
+  .section__head { margin: 0 auto 2.5rem; }
+  .section__head h2 { margin: 1rem 0 .85rem; }
+  .section__head p { font-size: .95rem; }
+
+  /* NAV: tap-targets y menú móvil */
+  .nav__inner { padding: .85rem 0; }
+  .nav__logo { width: 34px; height: 34px; }
+  .nav__brand-text strong { font-size: 1.1rem; }
+  .nav__mobile { padding: 5rem 1.5rem 2rem; }
+  .nav__mobile a { font-size: 1.5rem; padding: .75rem 0; }
+  .nav__mobile .btn { width: 100%; align-self: stretch; margin-top: 2rem; }
+  .nav__toggle, .nav__mobile-close { width: 44px; height: 44px; }
+
+  /* HERO: padding más razonable y métricas legibles */
+  .hero { padding: 6.5rem 0 3rem; }
+  .hero__inner { gap: 2rem; }
+  .hero__title { margin: 1.2rem 0 1rem; font-size: clamp(1.9rem, 8vw, 2.6rem); }
+  .hero__lead { font-size: .98rem; margin-bottom: 2rem; }
+  .hero__metrics {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .6rem;
+    padding: 1.2rem 0;
+  }
+  .hero__metric strong { font-size: 1.4rem; }
+  .hero__metric span { font-size: .55rem; letter-spacing: .12em; }
+
+  /* Formulario hero: reducir borde decorativo interno */
+  .hero__form { padding: 1.5rem 1.25rem; }
+  .hero__form::before { inset: 4px; }
+  .hero__form h3 { font-size: 1.25rem; }
+  .hero__form p.subtitle { font-size: .8rem; margin-bottom: 1.2rem; }
+  .field-row { grid-template-columns: 1fr; gap: .85rem; }
+  .field input, .field select { padding: .8rem .85rem; font-size: 1rem; /* evita zoom iOS */ }
+
+  /* ABOUT */
+  .about__grid { margin-top: 2.5rem; }
+  .about__pillar { padding: 0; }
+
+  /* PROJECTS */
+  .projects__grid { gap: 1.25rem; }
+  .project__body { padding: 1.25rem; }
+  .project__name { font-size: 1.25rem; }
+
+  /* FEATURES */
+  .features__grid { margin-top: 2.5rem; }
+  .feature { padding: 1.75rem 1.4rem; }
+
+  /* LOCATION */
+  .location__grid { gap: 2rem; }
+  .location__copy li { font-size: .92rem; }
+  .location__cta { gap: .6rem; }
+  .location__cta .btn { flex: 1 1 auto; }
+
+  /* GALLERY: uniformar aspect-ratio para que no se vea descompensado */
+  .gallery__grid { gap: .65rem; }
+  .gallery__item,
+  .gallery__item:nth-child(4n+2),
+  .gallery__item:nth-child(4n+3) { aspect-ratio: 1 / 1; }
+  .gallery__tabs { gap: 1rem; margin-bottom: 2rem; }
+  .gallery__tab { font-size: .65rem; letter-spacing: .15em; }
+
+  /* VR BANNER */
+  .vr { padding: 3.5rem 0; }
+  .vr__cta .btn { width: 100%; }
+
+  /* TESTIMONIALS */
+  .testi { padding: 2rem 1.5rem; }
+  .testi p { font-size: 1rem; }
+
+  /* FAQ */
+  .faq__item summary { padding: 1.2rem 0; font-size: 1.05rem; }
+  .faq__answer { font-size: .92rem; max-width: 100%; padding-right: 1.5rem; }
+
+  /* CONTACT */
+  .contact__grid { gap: 2.5rem; }
+  .contact__info p { margin-bottom: 1.75rem; }
+  .contact__form { padding: 2rem 1.4rem; }
+  .contact__form::before { inset: 4px; }
+  .contact__form textarea { font-size: 1rem; /* evita zoom iOS */ }
+
+  /* FOOTER: apilar correctamente el bottom */
+  .foot { padding: 3rem 0 0; }
+  .foot__top { padding-bottom: 2rem; gap: 2rem; }
+  .foot__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.25rem;
+  }
+
+  /* WhatsApp float: un poco más chico y dentro del safe-area */
+  .wa-float {
+    width: 52px; height: 52px;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  .wa-float svg { width: 26px; height: 26px; }
+}
+
+/* Pantallas muy estrechas (iPhone SE, etc.) */
+@media (max-width: 380px) {
+  :root { --gutter: .9rem; }
+  .hero__metric strong { font-size: 1.2rem; }
+  .hero__metric span { font-size: .5rem; letter-spacing: .1em; }
+  .hero__title { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+  .section__head h2 { font-size: 1.6rem; }
+  .testi { padding: 1.75rem 1.25rem; }
+  .testi p { font-size: .95rem; }
+}
+
+/* Mejora general: evitar overflow horizontal en cualquier elemento decorativo */
+@media (max-width: 768px) {
+  .hero, .vr, .section { overflow-x: hidden; }
+}
 </style>
 </head>
 <body>
@@ -910,18 +1046,20 @@ p { margin: 0; }
       </button>
     </div>
   </div>
-  <div class="nav__mobile" id="navMobile">
-    <button class="nav__mobile-close" id="navClose" aria-label="Cerrar menú">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-    <a href="#proyectos">Proyectos</a>
-    <a href="#caracteristicas">Características</a>
-    <a href="#ubicacion">Ubicación</a>
-    <a href="#galeria">Galería</a>
-    <a href="#contacto">Contacto</a>
-    <a href="#contacto" class="btn btn--primary">Cotizar lote</a>
-  </div>
 </header>
+
+<!-- Menú móvil: hermano del header (FUERA), para evitar que el backdrop-filter del header lo "atrape" como containing block -->
+<div class="nav__mobile" id="navMobile">
+  <button class="nav__mobile-close" id="navClose" aria-label="Cerrar menú">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="#proyectos">Proyectos</a>
+  <a href="#caracteristicas">Características</a>
+  <a href="#ubicacion">Ubicación</a>
+  <a href="#galeria">Galería</a>
+  <a href="#contacto">Contacto</a>
+  <a href="#contacto" class="btn btn--primary">Cotizar lote</a>
+</div>
 
 <!-- ============================================
      HERO
@@ -1466,9 +1604,11 @@ p { margin: 0; }
   const navToggle = document.getElementById("navToggle");
   const navMobile = document.getElementById("navMobile");
   const navClose = document.getElementById("navClose");
-  navToggle?.addEventListener("click", () => navMobile.classList.add("open"));
-  navClose?.addEventListener("click", () => navMobile.classList.remove("open"));
-  navMobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navMobile.classList.remove("open")));
+  const openMenu = () => { navMobile.classList.add("open"); document.body.style.overflow = "hidden"; };
+  const closeMenu = () => { navMobile.classList.remove("open"); document.body.style.overflow = ""; };
+  navToggle?.addEventListener("click", openMenu);
+  navClose?.addEventListener("click", closeMenu);
+  navMobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
 
   // Reveal on scroll
   const io = new IntersectionObserver((entries) => {
